@@ -44,3 +44,6 @@ pnpm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+firestore-debug.log
+ui-debug.log

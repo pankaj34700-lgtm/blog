@@ -1,6 +1,4 @@
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
-import { getFirestore, type Firestore } from 'firebase/firestore';
-import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 export const REQUIRED_FIREBASE_ENV_KEYS = [
   'VITE_FIREBASE_API_KEY',
@@ -57,5 +55,3 @@ export function createFirebaseApp(env: FirebaseEnv = import.meta.env): FirebaseA
 }
 
 export const firebaseApp: FirebaseApp = createFirebaseApp();
-export const db: Firestore = getFirestore(firebaseApp);
-export const storage: FirebaseStorage = getStorage(firebaseApp);
