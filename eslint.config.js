@@ -29,13 +29,17 @@ export default tseslint.config(
               group: ['**/data/blogs', '**/data/blogs/*', '@/data/blogs', '@/data/blogs/*'],
               message: 'Import listLatestBlogs from @/data/blogRepository instead of the dummy data module.',
             },
+            {
+              group: ['firebase/auth'],
+              message: 'Use the AuthProvider and useAuth hook instead of importing firebase/auth directly.',
+            },
           ],
         },
       ],
     },
   },
   {
-    files: ['src/data/**/*.ts', 'tests/**/*.{ts,tsx}', 'e2e/**/*.ts', '*.config.ts'],
+    files: ['src/data/**/*.ts', 'src/lib/**/*.ts', 'tests/**/*.{ts,tsx}', 'e2e/**/*.ts', '*.config.ts'],
     languageOptions: {
       globals: { ...globals.node },
     },

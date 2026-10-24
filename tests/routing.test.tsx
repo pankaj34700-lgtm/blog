@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { renderApp } from './testUtils';
 
 describe('routing', () => {
-  it('TC-123 renders the Sign up placeholder with a way home', () => {
+  it('TC-123 redirects /signup to the sign-in page', async () => {
     renderApp('/signup');
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Sign up' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Back to the home page' })).toHaveAttribute('href', '/');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Sign in' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Continue with Google' })).toBeInTheDocument();
   });
 
   it('TC-124 renders a not-found page for unknown routes', () => {

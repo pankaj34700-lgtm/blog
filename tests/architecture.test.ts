@@ -20,4 +20,22 @@ describe('architecture guard', () => {
 
     expect(good.messages).toEqual([]);
   });
+
+  it('TC-217 blocks direct imports of firebase/auth from components', async () => {
+    const eslint = new ESLint();
+
+    const [bad] = await eslint.lintText(
+      "import { getAuth } from 'firebase/auth';\nexport const auth = getAuth;\n",
+      { filePath: 'src/components/auth-probe.tsx' },
+    );
+
+    expect(bad.messages.some((message) => message.ruleId === 'no-restricted-imports')).toBe(true);
+
+    const [good] = await eslint.lintText(
+      "import { useAuth } from '@/auth/useAuth';\nexport const who = useAuth;\n",
+      { filePath: 'src/components/auth-probe-ok.tsx' },
+    );
+
+    expect(good.messages).toEqual([]);
+  });
 });

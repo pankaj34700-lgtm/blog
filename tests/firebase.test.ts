@@ -7,12 +7,12 @@ import { describe, expect, it } from 'vitest';
 import {
   REQUIRED_FIREBASE_ENV_KEYS,
   createFirebaseApp,
-  db,
   firebaseApp,
   readFirebaseConfig,
-  storage,
   type FirebaseEnv,
 } from '@/lib/firebase';
+import { db } from '@/lib/firestore';
+import { storage } from '@/lib/storage';
 
 const validEnv: FirebaseEnv = {
   VITE_FIREBASE_API_KEY: 'api-key',
