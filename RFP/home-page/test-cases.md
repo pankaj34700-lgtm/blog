@@ -17,14 +17,12 @@ there are no rules or data tests. Firebase is only initialized from env config.
 | unit | `npm run test` | TC-101–TC-144 |
 | lint | `npm run lint` | TC-140 |
 | typecheck | `npm run typecheck` | build correctness |
-| e2e | `npm run test:e2e` | TC-130–TC-135 |
 | build | `npm run build` | production build |
 
-Playwright uses the locally installed Chrome (`channel: "chrome"`) and starts the
-Vite dev server automatically.
-
-Recorded playback: `playwright-cli` evidence is saved under
-`test-results/e2e/<feature>/` (trace, video, and a screenshot per breakpoint).
+E2E cases (TC-130–TC-135 and TC-144) are executed at runtime with `playwright-cli`
+in headed mode against the dev server. There are no Playwright spec files.
+`tracing-start`, `video-start`, `resize`, and `screenshot` capture the evidence
+under `test-results/e2e/home-page/`.
 
 ## Test cases
 
@@ -81,12 +79,12 @@ Recorded playback: `playwright-cli` evidence is saved under
 
 | ID | Type | Given / When / Then | Expected | Automated |
 | --- | --- | --- | --- | --- |
-| TC-130 | e2e | Given the app is served, when `/` loads | header shows BlogX and exactly 10 cards | yes |
-| TC-131 | e2e | Given a 375px viewport | one column, no horizontal scroll | yes |
-| TC-132 | e2e | Given a 768px viewport | two columns | yes |
-| TC-133 | e2e | Given a 1440px viewport | three columns | yes |
-| TC-134 | e2e | Given the home page, when Sign up is clicked | URL is `/signup` and the placeholder renders | yes |
-| TC-135 | e2e | Given the home page loads | zero console errors and zero failed requests | yes |
+| TC-130 | e2e | Given the app is served, when `/` loads | header shows BlogX and exactly 10 cards | runtime (CLI) |
+| TC-131 | e2e | Given a 375px viewport | one column, no horizontal scroll | runtime (CLI) |
+| TC-132 | e2e | Given a 768px viewport | two columns | runtime (CLI) |
+| TC-133 | e2e | Given a 1440px viewport | three columns | runtime (CLI) |
+| TC-134 | e2e | Given the home page, when Sign up is clicked | URL is `/signup` and the placeholder renders | runtime (CLI) |
+| TC-135 | e2e | Given the home page loads | zero console errors and zero failed requests | runtime (CLI) |
 
 ### Architecture
 
@@ -101,7 +99,7 @@ Recorded playback: `playwright-cli` evidence is saved under
 | TC-141 | unit | Given all six `VITE_` values, when the config module loads twice | the app is created once, `projectId` is `blog-4b891`, `db` and `storage` are instances | yes |
 | TC-142 | unit | Given one required variable is missing, when config loads | throws an error naming that variable, not `undefined` | yes |
 | TC-143 | unit | Given `.env.example` and `.gitignore` | all six keys documented, `.env.local` is ignored | yes |
-| TC-144 | e2e | Given the home page loads with config wired | zero requests to `firestore.googleapis.com` or `firebasestorage.googleapis.com` | yes |
+| TC-144 | e2e | Given the home page loads with config wired | zero requests to `firestore.googleapis.com` or `firebasestorage.googleapis.com` | runtime (CLI) |
 
 ## Traceability
 

@@ -35,15 +35,15 @@ the Sign up action on any screen size.
 ### In scope
 
 - Vite + React + TypeScript app with plain CSS.
-- Header with the `BlogX` wordmark linking to `/` and a `Sign up` link to `/signup`.
-- Home page listing exactly ten blog posts from local dummy data, newest first.
+- Header with the `BlogX` wordmark linking to `/` and a `Sign up` link to `/signup`.- Home page listing exactly ten blog posts from local dummy data, newest first.
 - Post card: cover image, title, excerpt, author, publish date, tags.
 - Loading, empty, and error-with-retry states.
 - Responsive grid: one column on mobile, two at tablet, three on desktop.
 - `/signup` placeholder page and a not-found page.
 - Firebase Web SDK initialization from `VITE_FIREBASE_*` environment variables for
   project `blog-4b891`, with no Firebase reads or writes.
-- Vitest/React Testing Library component tests, Playwright e2e tests, ESLint rule
+- Vitest/React Testing Library component tests, runtime e2e verification through
+  `playwright-cli` in headed mode (recorded, no spec files), and an ESLint rule
   preventing components from importing the dummy data module directly.
 
 ### Out of scope
@@ -123,7 +123,8 @@ owner-only rules, PNG/JPEG only, 5 MB cap.
 - `blog-4b891` is a live Firebase project with a web app registered.
 - Placeholder cover images may be remote URLs; tests do not depend on them loading.
 - Publish dates are fixed in dummy data, so the rendered date strings are stable.
-- Chrome is available for Playwright (detected on this machine), avoiding a browser download.
+- Chrome is available, and `playwright-cli` drives it in headed mode for the
+  recorded e2e verification.
 
 ## Open questions
 
