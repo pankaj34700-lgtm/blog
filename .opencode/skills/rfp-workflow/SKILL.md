@@ -34,6 +34,9 @@ or skip a phase unless the user explicitly says to.
 10. **No secrets in the repo.** Firebase config is read from project files or
     environment variables; service account keys, tokens, and `.env` files stay
     untracked.
+11. **Merge into `main` after a successful deploy, and keep the branch.** Use a
+    `--no-ff` merge so the feature boundary stays visible. Never delete the
+    feature branch, locally or remotely.
 
 ## Stack conventions
 
@@ -248,6 +251,13 @@ only project is `blog-4b891`, so a deploy is immediately live for real users.
    intended. For rules or indexes, check that the release reported success.
 7. Report the live URL, the deployed commit, the target list, and the smoke-check
    result in the final summary.
+8. Merge the finished branch into `main`:
+   `git switch main`, `git merge --no-ff feature/<feature> -m "merge: <feature>"`,
+   then `git switch back` to the feature branch if the user wants to keep
+   working there. Keep the feature branch alive — never delete it, never
+   force-push, and never rewrite `main` history.
+9. Confirm the merge with `git log --oneline --graph -5` and include the merge
+   commit in the final summary.
 
 Stop and report instead of retrying when: the build fails, authentication is
 missing, the project is wrong, a rules deploy is rejected, or the deploy output
@@ -274,8 +284,10 @@ explicitly in the summary.
 - Commits are scoped and the branch is ready for review.
 - The build is deployed to `blog-4b891`, and the live URL returns the expected
   content in a smoke check.
+- The feature branch is merged into `main` with a `--no-ff` merge commit and the
+  branch is kept.
 - Final message: what changed, test evidence, branch name, commits, live URL and
-  deployed targets, and any follow-ups or known limitations.
+  deployed targets, the merge commit, and any follow-ups or known limitations.
 
 ## Language and tone
 
