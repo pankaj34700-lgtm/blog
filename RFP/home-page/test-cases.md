@@ -4,6 +4,7 @@
 | --- | --- |
 | Status | Approved |
 | Requirement | [requirement.md](./requirement.md) |
+| Run report | [test-report.md](./test-report.md) |
 | Approved by | BlogX Dev |
 | Date | 2026-10-24 |
 

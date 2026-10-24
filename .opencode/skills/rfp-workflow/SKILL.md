@@ -210,7 +210,9 @@ reviewable. Automated suites stay at the unit and integration level.
    `screenshot --filename=test-results/e2e/<feature>/<case-id>-home-375.png`,
    then 768 and 1440. Name every file with the case ID it proves.
 7. Read `console` and record any error or failed request.
-8. `tracing-stop`, `video-stop`, then `close`.
+8. `tracing-stop`, `video-stop`, pause a moment so the video flushes, then
+   `close`. A file that is still 0 bytes means the stop and close raced; record
+   it again.
 9. Report the evidence paths and a per-case verdict (pass or fail, and what was
    actually on screen) in the final summary.
 
