@@ -106,6 +106,26 @@ Start-Sleep -Seconds 2
 playwright-cli -s=home-page close
 ```
 
+## Deployment
+
+| Item | Value |
+| --- | --- |
+| Project | blog-4b891 |
+| Live URL | https://blog-4b891.web.app |
+| Targets | `hosting` |
+| Source commit | `6adb85a` (feature branch) |
+| Build | `dist`, 13 files |
+| Firebase CLI | 15.34.0, account `ddmai651@gmail.com` |
+
+Smoke checks after release:
+
+| Check | Result |
+| --- | --- |
+| `GET /` | 200, contains `BlogX` and the hashed app bundle |
+| `GET /signup` | 200, served by the SPA rewrite (`#root` present) |
+| `Cache-Control` for `/` and `/index.html` | `no-cache` |
+| `Cache-Control` for `/assets/**` | `public, max-age=31536000, immutable` |
+
 ## Notes
 
 - The first recorded run at this commit produced a 0-byte video when
