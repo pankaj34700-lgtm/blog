@@ -5,7 +5,18 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'playwright-report', 'test-results', 'node_modules'] },
+  {
+    ignores: [
+      'dist',
+      'coverage',
+      'playwright-report',
+      'test-results',
+      'node_modules',
+      '.playwright-cli',
+      '.firebase',
+      'New folder',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
