@@ -27,8 +27,10 @@ or skip a phase unless the user explicitly says to.
    explicit approval.
 8. **Test against the Firebase Emulator Suite, never against a live project.**
    No test, seed script, or experiment may read or write production data.
-9. **Never deploy autonomously.** Deployment is a separate, explicitly approved
-   step after the definition of done is met.
+9. **Deploy once the feature is done.** When the definition of done passes,
+   deploy the built app to Firebase project `blog-4b891` as the final step.
+   Never deploy mid-feature, never to another project, and never widen the
+   target list without saying so.
 10. **No secrets in the repo.** Firebase config is read from project files or
     environment variables; service account keys, tokens, and `.env` files stay
     untracked.
@@ -221,25 +223,40 @@ when the user explicitly asks for recordings in the RFP folder. If
 `playwright-cli` is unavailable, say so and ask before falling back to a
 scripted suite — never skip verification silently.
 
-## Deployment (only after the definition of done)
+## Phase 6 — Deploy to Firebase (required after done)
 
-Deployment is not part of the autonomous loop. The only project is
-`blog-4b891`, so a deploy is immediately live for real users.
+Deployment is the last step of a completed feature, not an optional extra. The
+only project is `blog-4b891`, so a deploy is immediately live for real users.
 
-1. Confirm all approved tests pass against the emulator, including Firestore and
-   Storage rules tests.
-2. Present the deploy plan: `firebase use blog-4b891`, the exact targets
-   (`--only hosting,firestore:rules,firestore:indexes,storage`), the rules and
-   index diff, any data migration or Storage cleanup with its rollback, and the
-   expected user-visible change.
-3. Get explicit approval for that exact plan. Any change to the targets requires
-   a new approval.
-4. Deploy only the approved targets. Never deploy `functions` and never widen
-   the `--only` list.
-5. Verify the live result: load the hosted URL, confirm the new rules and indexes
-   are active (`firebase firestore:indexes`), and smoke-test the changed flow.
-6. Record the outcome in the final summary. If the deploy fails, stop and report;
-   do not retry with a broader target.
+1. Confirm the definition of done is met and the working tree is committed.
+   Never deploy from a failing suite or an uncommitted build.
+2. Make sure `firebase.json` and `.firebaserc` exist for `blog-4b891`, with
+   Hosting serving `dist` and an SPA rewrite from `**` to `/index.html`. Add them
+   once, then keep them.
+3. `npm run build`, then confirm `dist/index.html` exists.
+4. Verify the account and project: `firebase login:list` and
+   `firebase projects:list`, then `firebase use blog-4b891`. If no account or no
+   access, stop and ask the user to run `firebase login`.
+5. Deploy the targets this feature actually changed:
+   - always `hosting`;
+   - add `firestore:rules` and `firestore:indexes` only when the collection or
+     query changed;
+   - add `storage` only when upload paths or storage rules changed.
+   Example: `firebase deploy --only hosting,firestore:rules,firestore:indexes`.
+6. Smoke-check the live result: request the hosted URL, confirm a 200 and the
+   expected page content, and confirm the deploy output lists the targets you
+   intended. For rules or indexes, check that the release reported success.
+7. Report the live URL, the deployed commit, the target list, and the smoke-check
+   result in the final summary.
+
+Stop and report instead of retrying when: the build fails, authentication is
+missing, the project is wrong, a rules deploy is rejected, or the deploy output
+mentions an unexpected target. Never run `functions:delete`, `firestore:delete`,
+or any command that deletes data. Never retry a failed deploy with a broader
+target list.
+
+If the user says not to deploy a particular feature, skip this phase and say so
+explicitly in the summary.
 
 ## Definition of done
 
@@ -255,8 +272,10 @@ Deployment is not part of the autonomous loop. The only project is
 - E2E evidence is recorded under `test-results/e2e/<feature>/` (trace, video, and
   one screenshot per breakpoint), and the final summary links to it.
 - Commits are scoped and the branch is ready for review.
-- Final message: what changed, test evidence, branch name, commits, deploy plan
-  for the next step, and any follow-ups or known limitations.
+- The build is deployed to `blog-4b891`, and the live URL returns the expected
+  content in a smoke check.
+- Final message: what changed, test evidence, branch name, commits, live URL and
+  deployed targets, and any follow-ups or known limitations.
 
 ## Language and tone
 
