@@ -23,6 +23,9 @@ there are no rules or data tests. Firebase is only initialized from env config.
 Playwright uses the locally installed Chrome (`channel: "chrome"`) and starts the
 Vite dev server automatically.
 
+Recorded playback: `playwright-cli` evidence is saved under
+`test-results/e2e/<feature>/` (trace, video, and a screenshot per breakpoint).
+
 ## Test cases
 
 ### Header

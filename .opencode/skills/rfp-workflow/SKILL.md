@@ -192,6 +192,32 @@ Additional rules:
   permitted Firebase commands are emulator, login-status, project-list, and
   read-only inspection.
 
+### Recorded e2e verification with playwright-cli
+
+Verify the e2e cases twice: once with the automated suite, and once through
+`playwright-cli` with recording, so the result is reviewable rather than only
+asserted. Load the `playwright-cli` skill first and follow its reference guides.
+
+1. Start the app in the background and wait until the URL responds.
+2. Create `test-results/e2e/<feature>/` (gitignored) for the recordings.
+3. `playwright-cli -s=<feature> open --headed <url>`
+4. `playwright-cli -s=<feature> tracing-start`, then
+   `playwright-cli -s=<feature> video-start test-results/e2e/<feature>/<feature>.webm --cursor`
+5. Walk each e2e case in order: `snapshot`, interact by ref, confirm the result
+   with `find` or `eval`.
+6. Capture each breakpoint: `resize 375 812` and
+   `screenshot --filename=test-results/e2e/<feature>/home-375.png`, then 768 and
+   1440. Name every file with the case ID it proves.
+7. Read `console` and record any error or failed request.
+8. `tracing-stop`, `video-stop`, then `close`.
+9. Report the evidence paths and a per-case verdict (pass or fail, and what was
+   actually on screen) in the final summary.
+
+Evidence stays under `test-results/` and out of version control. Commit it only
+when the user explicitly asks for recordings in the RFP folder. If
+`playwright-cli` is unavailable, run the automated suite and say so — never skip
+verification silently.
+
 ## Deployment (only after the definition of done)
 
 Deployment is not part of the autonomous loop. The only project is
@@ -223,6 +249,8 @@ Deployment is not part of the autonomous loop. The only project is
   result summary.
 - `RFP/<Feature-Name>/requirement.md` and `test-cases.md` reflect what was built,
   including the final data model and deployment targets.
+- E2E evidence is recorded under `test-results/e2e/<feature>/` (trace, video, and
+  one screenshot per breakpoint), and the final summary links to it.
 - Commits are scoped and the branch is ready for review.
 - Final message: what changed, test evidence, branch name, commits, deploy plan
   for the next step, and any follow-ups or known limitations.
