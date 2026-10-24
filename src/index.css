@@ -113,6 +113,77 @@ a {
   transform: translateY(1px);
 }
 
+.button--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.button--ghost:hover {
+  background: #efeee9;
+}
+
+.button--google {
+  min-height: 44px;
+  padding: 10px 20px;
+}
+
+/* Account */
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.account__avatar {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.account__name {
+  max-width: 180px;
+  overflow: hidden;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-skeleton {
+  display: block;
+  width: 96px;
+  height: 40px;
+  border-radius: 999px;
+  background: linear-gradient(100deg, #eceae3 30%, #f5f3ee 50%, #eceae3 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@media (max-width: 520px) {
+  .account__name {
+    display: none;
+  }
+}
+
+.form-error {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid #f0c2bd;
+  border-radius: 10px;
+  background: #fdf1f0;
+  color: #8f1f18;
+}
+
+.page__hint {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 /* Layout */
 
 .page {
