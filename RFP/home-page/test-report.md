@@ -7,7 +7,7 @@
 | Test cases | [test-cases.md](./test-cases.md) |
 | Date | 2026-10-24 |
 | Branch | feature/home-page |
-| Result | **Pass** (23 unit, 6 runtime e2e) |
+| Result | **Pass** (23 unit, 6 runtime e2e, 1 manual) |
 
 ## Environment
 
@@ -57,6 +57,15 @@ page.
 | TC-135 | Read `console` | 3 messages, 0 errors, 0 warnings | pass |
 | TC-144 | Read resource timings | zero `googleapis` / `firebaseio` requests | pass |
 
+## Manual verification (playwright-cli, headed)
+
+Session: `blogx-focus` — opened headed, two `Tab` presses, then computed styles
+read from the focused element.
+
+| Case | Action | Observed | Verdict |
+| --- | --- | --- | --- |
+| TC-104 | `Tab`, `Tab` | focus order `BlogX` → `Sign up`; focused link shows `outline: solid 2.4px rgb(31, 111, 235)`, offset `2.4px` | pass |
+
 ## Evidence
 
 Recorded under `test-results/e2e/home-page/` (gitignored):
@@ -68,15 +77,13 @@ Recorded under `test-results/e2e/home-page/` (gitignored):
 | `TC-132-home-768.png` | Two-column tablet layout |
 | `TC-133-home-1440.png` | Three-column desktop layout |
 | `TC-134-signup.png` | Sign-up placeholder after navigation |
+| `TC-104-focus-signup.png` | Visible focus ring on the focused Sign up link |
 
 Trace and network log: `.playwright-cli/traces/trace-1792804565008.trace` and
 `.network`, with the `resources/` directory beside them.
 
 ## Not covered
 
-- **TC-104 (manual)**: visible focus ring on Sign up. jsdom does not compute
-  `:focus-visible`, and the runtime pass did not capture a focused screenshot.
-  Verify by tabbing to Sign up in a headed session; expected: 3px accent outline.
 - **Excerpt truncation**: CSS line clamping only; judged visually in the three
   viewport screenshots.
 - **Firestore and Storage**: no reads, writes, rules, or indexes this phase.

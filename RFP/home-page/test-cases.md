@@ -34,7 +34,7 @@ under `test-results/e2e/home-page/`.
 | TC-101 | unit | Given the home page renders, when the header is inspected | `BlogX` is visible and links to `/` | yes |
 | TC-102 | unit | Given the header, when queried by role link "Sign up" | accessible name is "Sign up", `href` is `/signup` | yes |
 | TC-103 | unit | Given the header, when tabbing from the top of the page | focus reaches BlogX, then Sign up, in that order | yes |
-| TC-104 | manual | Given the header, when Sign up is focused by keyboard | a visible focus ring appears | no |
+| TC-104 | manual | Given the header, when Sign up is focused by keyboard | a visible focus ring appears | manual ✓ (2026-10-24) |
 
 ### Data and sorting
 
